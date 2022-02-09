@@ -1,18 +1,27 @@
 {
   "name": "frontend-javascript-country-information-world-regions",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Inleiding",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
   "devDependencies": {
     "parcel": "^2.0.0",
     "parcel-plugin-nuke-dist": "^1.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hogeschoolnovi/frontend-javascript-country-information-prt1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hogeschoolnovi/frontend-javascript-country-information-prt1/issues"
+  },
+  "homepage": "https://github.com/hogeschoolnovi/frontend-javascript-country-information-prt1#readme",
+  "dependencies": {
+    "axios": "^0.25.0"
   }
 }
