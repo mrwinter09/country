@@ -523,25 +523,31 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 async function fetchData() {
-    const listUno = document.getElementById('list_u');
-    const countryList = document.createElement('li');
     try {
         const result = await _axiosDefault.default.get('https://restcountries.com/v2/all');
         console.log(result.data);
         console.log(result.data[0]);
-        result.data.map((allCountries)=>{
-            countryList.innerHTML = `
-        
-            <h3>${allCountries.name}</h3>
-            <p>${allCountries.population}</p>
-            `;
-            listUno.appendChild(countryList);
+        result.data.sort((a, b)=>{
+            return a.population - b.population;
         });
+        getAllCountries(result.data);
     } catch (error) {
         console.error(error);
     }
 }
 fetchData();
+function getAllCountries(countries) {
+    const listUno = document.getElementById('list_u');
+    countries.map((allCountries)=>{
+        const countryList = document.createElement('li');
+        countryList.innerHTML = `
+        
+        <h3 class="${allCountries.region}"><img src="${allCountries.flag}" class="flag"/> ${allCountries.name}</h3>
+        <p>Has a population of ${allCountries.population} people</p>
+        `;
+        listUno.appendChild(countryList);
+    });
+}
 
 },{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
 module.exports = require('./lib/axios');

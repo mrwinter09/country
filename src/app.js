@@ -1,28 +1,16 @@
 import axios from 'axios';
 
 async function fetchData() {
-    const listUno = document.getElementById('list_u')
-
-    const countryList = document.createElement('li')
-
     try {
         const result = await axios.get('https://restcountries.com/v2/all')
         console.log(result.data);
         console.log(result.data[0]);
 
-        result.data.map((allCountries) => {
-            countryList.innerHTML = `
-        
-            <h3>${allCountries.name}</h3>
-            <p>${allCountries.population}</p>
-            `
-
-            listUno.appendChild(countryList)
+        result.data.sort((a, b) => {
+            return a.population - b.population;
         })
 
-
-
-
+        getAllCountries(result.data)
 
     }
     catch (error) {
@@ -32,3 +20,20 @@ async function fetchData() {
 
 fetchData();
 
+function getAllCountries(countries) {
+    const listUno = document.getElementById('list_u');
+
+    countries.map((allCountries) => {
+
+        const countryList = document.createElement('li');
+
+        countryList.innerHTML = `
+        
+        <h3 class="${allCountries.region}"><img src="${allCountries.flag}" class="flag"/> ${allCountries.name}</h3>
+        <p>Has a population of ${allCountries.population} people</p>
+        `
+
+        listUno.appendChild(countryList)
+    })
+
+}
