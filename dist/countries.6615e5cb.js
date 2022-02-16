@@ -538,10 +538,13 @@ var _axiosDefault = parcelHelpers.interopDefault(_axios);
 // 9.   Maak hier een if else statement die je koppeld aan je API 
 // 10. Probeer het op de pagina te krijgen (index html container maken en die naar javascript halen)
 // 11.  Ga nu bezig met stylen
-async function fetchCountriesData() {
-    const containerResult = document.getElementById('countriesResult');
+const containerResult = document.getElementById('countriesResult');
+const errorMessage = document.getElementById('error-message');
+async function fetchCountriesData(name) {
+    errorMessage.innerHTML = ` `;
+    containerResult.innerHTML = ` `;
     try {
-        const result = await _axiosDefault.default.get('https://restcountries.com/v2/name/peru');
+        const result = await _axiosDefault.default.get(`https://restcountries.com/v2/name/${name}`);
         console.log(result.data);
         console.log(result.data[0].name);
         console.log(result.data[0].flag);
@@ -550,13 +553,32 @@ async function fetchCountriesData() {
         containerResult.innerHTML = `
         <h3><img src="${countries.flag}" width= "100px"/> ${countries.name}</h3>
         <p>${countries.name} is situated in ${countries.subregion}. It has a population of ${countries.population} people.</p>
-        <p>The capital is ${countries.capital} and you can pay with ${countries.currencies[0].name}.</p> 
+        <p>The capital is ${countries.capital} ${getCurrencies(countries.currencies)}.</p> 
+        <p>${getLanguages(countries.languages)}.</p> 
         `;
     } catch (error) {
         console.error(error);
+        errorMessage.innerHTML = `
+         <p>${name} bestaat niet, try again.</p>
+        `;
     }
 }
-fetchCountriesData();
+function getCurrencies(currencies) {
+    if (currencies.length === 2) return `and you can pay with ${currencies[0].name} and ${currencies[1].name}`;
+    else return `and you can pay with ${currencies[0].name}`;
+}
+function getLanguages(languages) {
+    if (languages.length === 3) return `They speak ${languages[0].name} and ${languages[1].name} and ${languages[2].name}`;
+    else if (languages.length === 2) return `They speak ${languages[0].name} and ${languages[1].name}`;
+    else return `They speak ${languages[0].name}`;
+}
+const searchForm = document.getElementById('search-form');
+searchForm.addEventListener('submit', searchingCountries);
+function searchingCountries(e) {
+    e.preventDefault();
+    const inputField = document.getElementById('search-country');
+    fetchCountriesData(inputField.value);
+}
 
 },{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
 module.exports = require('./lib/axios');
