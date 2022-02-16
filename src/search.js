@@ -20,7 +20,7 @@ import axios from 'axios';
 async function fetchCountriesData() {
     const containerResult = document.getElementById('countriesResult')
     try {
-        const result = await axios.get('https://restcountries.com/v2/name/peru')
+        const result = await axios.get('https://restcountries.com/v2/name/netherlands')
         console.log(result.data);
         console.log(result.data[0].name);
         console.log(result.data[0].flag);
@@ -30,7 +30,7 @@ async function fetchCountriesData() {
         containerResult.innerHTML = `
         <h3><img src="${countries.flag}" width= "100px"/> ${countries.name}</h3>
         <p>${countries.name} is situated in ${countries.subregion}. It has a population of ${countries.population} people.</p>
-        <p>The capital is ${countries.capital} and you can pay with ${countries.currencies[0].name}.</p> 
+        <p>The capital is ${countries.capital} ${getCurrencies(countries.currencies)}.</p> 
         `
     }
     catch (error) {
@@ -39,3 +39,12 @@ async function fetchCountriesData() {
 }
 
 fetchCountriesData();
+
+function getCurrencies(currencies) {
+    if (currencies.length === 2) {
+        return `and you can pay with ${currencies[0].name} and ${currencies[1].name}`;
+    } else {
+        return `and you can pay with ${currencies[0].name}`;
+    }
+
+}

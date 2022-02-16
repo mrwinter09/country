@@ -541,7 +541,7 @@ var _axiosDefault = parcelHelpers.interopDefault(_axios);
 async function fetchCountriesData() {
     const containerResult = document.getElementById('countriesResult');
     try {
-        const result = await _axiosDefault.default.get('https://restcountries.com/v2/name/peru');
+        const result = await _axiosDefault.default.get('https://restcountries.com/v2/name/netherlands');
         console.log(result.data);
         console.log(result.data[0].name);
         console.log(result.data[0].flag);
@@ -550,13 +550,17 @@ async function fetchCountriesData() {
         containerResult.innerHTML = `
         <h3><img src="${countries.flag}" width= "100px"/> ${countries.name}</h3>
         <p>${countries.name} is situated in ${countries.subregion}. It has a population of ${countries.population} people.</p>
-        <p>The capital is ${countries.capital} and you can pay with ${countries.currencies[0].name}.</p> 
+        <p>The capital is ${countries.capital} ${getCurrencies(countries.currencies)}.</p> 
         `;
     } catch (error) {
         console.error(error);
     }
 }
 fetchCountriesData();
+function getCurrencies(currencies) {
+    if (currencies.length === 2) return `and you can pay with ${currencies[0].name} and ${currencies[1].name}`;
+    else return `and you can pay with ${currencies[0].name}`;
+}
 
 },{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
 module.exports = require('./lib/axios');
